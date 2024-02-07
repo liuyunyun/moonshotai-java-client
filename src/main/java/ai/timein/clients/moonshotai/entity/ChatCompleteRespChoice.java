@@ -1,9 +1,9 @@
 package ai.timein.clients.moonshotai.entity;
 
-public class ChatCompleteResultChoice {
+public class ChatCompleteRespChoice {
     private Integer index;
 
-    private MessageDTO message;
+    private Message message;
 
     private String finish_reason;
 
@@ -15,11 +15,11 @@ public class ChatCompleteResultChoice {
         this.index = index;
     }
 
-    public MessageDTO getMessage() {
+    public Message getMessage() {
         return message;
     }
 
-    public void setMessage(MessageDTO message) {
+    public void setMessage(Message message) {
         this.message = message;
     }
 

@@ -8,4 +8,10 @@ public interface ApiUrls {
     String LIST_MODELS = "/models";
 
     String TOKEN_COUNT = "/tokenizers/estimate-token-count";
+
+    String FILES = "/files";
+
+    String FILES_ID = "/files/%s";
+
+    String FILES_ID_CONTENT = "/files/%s/content";
 }

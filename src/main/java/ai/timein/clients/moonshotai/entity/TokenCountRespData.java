@@ -1,6 +1,6 @@
 package ai.timein.clients.moonshotai.entity;
 
-public class TokenCountData {
+public class TokenCountRespData {
     private Integer total_tokens;
 
     public Integer getTotal_tokens() {

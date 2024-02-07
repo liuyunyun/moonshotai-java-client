@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatCompleteDTO {
+public class ChatCompleteReq {
     /**
      * Model ID, 可以通过 List Models 获取
      * 目前是 moonshot-v1-8k,moonshot-v1-32k,moonshot-v1-128k 其一
@@ -16,7 +16,7 @@ public class ChatCompleteDTO {
     /**
      * 包含迄今为止对话的消息列表。
      */
-    private List<MessageDTO> messages;
+    private List<Message> messages;
     /**
      * 聊天完成时生成的最大 token 数。如果到生成了最大 token 数个结果仍然没有结束，finish reason 会是 “length”, 否则会是 “stop”
      *
@@ -50,14 +50,14 @@ public class ChatCompleteDTO {
      */
     private Boolean stream;
 
-    public static ChatCompleteDTO create(String model, Float temperature) {
-        ChatCompleteDTO dto= new ChatCompleteDTO();
+    public static ChatCompleteReq create(String model, Float temperature) {
+        ChatCompleteReq dto= new ChatCompleteReq();
         dto.setModel(model);
         dto.setTemperature(temperature);
         return dto;
     }
 
-    public ChatCompleteDTO() {
+    public ChatCompleteReq() {
         messages = new ArrayList<>();
         stream=false;
     }
@@ -70,11 +70,11 @@ public class ChatCompleteDTO {
         this.model = model;
     }
 
-    public List<MessageDTO> getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<MessageDTO> messages) {
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
@@ -118,9 +118,9 @@ public class ChatCompleteDTO {
         this.stream = stream;
     }
 
-    public ChatCompleteDTO addMessage(String systemPrompt, String userPrompt) {
-        this.messages.add(MessageDTO.createSystemRole(systemPrompt));
-        this.messages.add(MessageDTO.createUserRole(userPrompt));
+    public ChatCompleteReq addMessage(String systemPrompt, String userPrompt) {
+        this.messages.add(Message.createSystemRole(systemPrompt));
+        this.messages.add(Message.createUserRole(userPrompt));
         return this;
     }
 }

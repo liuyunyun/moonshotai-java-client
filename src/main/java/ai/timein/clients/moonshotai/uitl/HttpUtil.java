@@ -1,16 +1,50 @@
 package ai.timein.clients.moonshotai.uitl;
 
+import ai.timein.clients.moonshotai.constant.Purposes;
 import ai.timein.clients.moonshotai.err.ClientException;
 import okhttp3.*;
 
-abstract public class HttpUtil {
-    private final static OkHttpClient client = new OkHttpClient();
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-    public static<T> T request(String url, String method, Object requestObj, Class<T> clazz, String... headersNamesAndValues){
+abstract public class HttpUtil {
+    private final static OkHttpClient client = new OkHttpClient().newBuilder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+
+    public static<T> T requestJson(String url, String method, Object requestObj, Class<T> clazz, Map<String,String> authHeaders){
+        Map<String,String> headers = new HashMap<>(authHeaders);
+        headers.put("Content-Type","application/json");
         Request request = new Request.Builder()
             .url(url)
-            .headers(Headers.of(headersNamesAndValues))
+            .headers(Headers.of(headers))
             .method(method, requestObj==null?null:RequestBody.create(JsonUtil.toJson(requestObj), MediaType.parse("application/json")))
+            .build();
+        try (Response response = client.newCall(request).execute()) {
+            String str=checkResponse(response);
+            return clazz.isAssignableFrom(String.class)?(T)str:JsonUtil.fromJson(str,clazz);
+        } catch (ClientException ce){
+            throw ce;
+        } catch (Exception e) {
+            throw new ClientException("Unknown err",e);
+        }
+    }
+
+    public static<T> T uploadFile(String url, String localPath, String remoteFileName, String fileContentType, Class<T> clazz, Map<String,String> authHeaders){
+        Map<String,String> headers = new HashMap<>(authHeaders);
+        headers.put("Content-Type","multipart/form-data");
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("purpose", Purposes.FILE_EXTRACT)
+                .addFormDataPart("file", remoteFileName,
+                        RequestBody.create(MediaType.parse(fileContentType), new File(localPath)))
+                .build();
+
+        Request request = new Request.Builder()
+            .url(url)
+            .headers(Headers.of(headers))
+            .post(requestBody)
             .build();
         try (Response response = client.newCall(request).execute()) {
             String str=checkResponse(response);

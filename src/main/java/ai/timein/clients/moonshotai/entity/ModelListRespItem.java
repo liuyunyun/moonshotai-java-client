@@ -2,12 +2,12 @@ package ai.timein.clients.moonshotai.entity;
 
 import java.util.List;
 
-public class ModelListItem {
+public class ModelListRespItem {
     private Long created;
     private String id;
     private String object;
     private String owned_by;
-    private List<ModelListPermission> permission;
+    private List<ModelListRespPermission> permission;
     private String root;
     private String parent;
 
@@ -43,11 +43,11 @@ public class ModelListItem {
         this.owned_by = owned_by;
     }
 
-    public List<ModelListPermission> getPermission() {
+    public List<ModelListRespPermission> getPermission() {
         return permission;
     }
 
-    public void setPermission(List<ModelListPermission> permission) {
+    public void setPermission(List<ModelListRespPermission> permission) {
         this.permission = permission;
     }
 

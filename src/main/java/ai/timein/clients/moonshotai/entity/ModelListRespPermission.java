@@ -1,6 +1,6 @@
 package ai.timein.clients.moonshotai.entity;
 
-public class ModelListPermission {
+public class ModelListRespPermission {
     private Long created;
     private String id;
     private String object;

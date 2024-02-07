@@ -1,6 +1,6 @@
 package ai.timein.clients.moonshotai.entity;
 
-public class ChatCompleteResultUsage {
+public class ChatCompleteRespUsage {
     private Integer prompt_tokens;
     private Integer completion_tokens;
     private Integer total_tokens;

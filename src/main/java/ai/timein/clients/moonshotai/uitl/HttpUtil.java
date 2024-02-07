@@ -13,7 +13,8 @@ abstract public class HttpUtil {
             .method(method, requestObj==null?null:RequestBody.create(JsonUtil.toJson(requestObj), MediaType.parse("application/json")))
             .build();
         try (Response response = client.newCall(request).execute()) {
-            return JsonUtil.fromJson(checkResponse(response),clazz);
+            String str=checkResponse(response);
+            return clazz.isAssignableFrom(String.class)?(T)str:JsonUtil.fromJson(str,clazz);
         } catch (ClientException ce){
             throw ce;
         } catch (Exception e) {

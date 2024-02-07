@@ -3,6 +3,7 @@ package ai.timein.clients.moonshotai;
 import ai.timein.clients.moonshotai.constant.ApiUrls;
 import ai.timein.clients.moonshotai.entity.ChatCompleteDTO;
 import ai.timein.clients.moonshotai.entity.ChatCompleteResult;
+import ai.timein.clients.moonshotai.entity.ModelListDTO;
 import ai.timein.clients.moonshotai.uitl.HttpUtil;
 
 public class MoonShotClient {
@@ -28,5 +29,9 @@ public class MoonShotClient {
     public ChatCompleteResult chatComplete(String systemPrompt, String userPrompt) {
         ChatCompleteDTO dto = ChatCompleteDTO.create().addMessage(systemPrompt, userPrompt);
         return HttpUtil.request(baseUrl+ApiUrls.CHAT_COMPLETE, "POST",dto, ChatCompleteResult.class, headers);
+    }
+
+    public ModelListDTO listModels() {
+        return HttpUtil.request(baseUrl+ApiUrls.LIST_MODELS, "GET", null, ModelListDTO.class, headers);
     }
 }

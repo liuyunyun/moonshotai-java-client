@@ -1,6 +1,3 @@
-# Test API Key
-src/test/java/ai/timein/clients/moonshotai/KeyHolder.java
-
 # Compiled class file
 *.class
 

@@ -1,16 +1,16 @@
 package ai.timein.clients.moonshotai.entity;
 
-public class TokenCountResult {
+public class TokenCountResp {
     private Integer code;
-    private TokenCountData data;
+    private TokenCountRespData data;
     private String scode;
     private Boolean status;
 
-    public TokenCountData getData() {
+    public TokenCountRespData getData() {
         return data;
     }
 
-    public void setData(TokenCountData data) {
+    public void setData(TokenCountRespData data) {
         this.data = data;
     }
 

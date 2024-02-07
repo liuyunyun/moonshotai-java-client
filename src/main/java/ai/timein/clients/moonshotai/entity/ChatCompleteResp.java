@@ -2,15 +2,15 @@ package ai.timein.clients.moonshotai.entity;
 
 import java.util.List;
 
-public class ChatCompleteResult {
+public class ChatCompleteResp {
     private String id;
     private String object;
     private String created;
     private String model;
 
-    private List<ChatCompleteResultChoice> choices;
+    private List<ChatCompleteRespChoice> choices;
 
-    private ChatCompleteResultUsage usage;
+    private ChatCompleteRespUsage usage;
 
     public String getId() {
         return id;
@@ -44,19 +44,19 @@ public class ChatCompleteResult {
         this.model = model;
     }
 
-    public List<ChatCompleteResultChoice> getChoices() {
+    public List<ChatCompleteRespChoice> getChoices() {
         return choices;
     }
 
-    public void setChoices(List<ChatCompleteResultChoice> choices) {
+    public void setChoices(List<ChatCompleteRespChoice> choices) {
         this.choices = choices;
     }
 
-    public ChatCompleteResultUsage getUsage() {
+    public ChatCompleteRespUsage getUsage() {
         return usage;
     }
 
-    public void setUsage(ChatCompleteResultUsage usage) {
+    public void setUsage(ChatCompleteRespUsage usage) {
         this.usage = usage;
     }
 }

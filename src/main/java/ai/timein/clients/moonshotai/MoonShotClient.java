@@ -1,5 +1,6 @@
 package ai.timein.clients.moonshotai;
 
+import ai.timein.clients.moonshotai.constant.ApiUrls;
 import ai.timein.clients.moonshotai.constant.Constant;
 import ai.timein.clients.moonshotai.entity.ChatCompleteDTO;
 import ai.timein.clients.moonshotai.entity.ChatCompleteResult;
@@ -18,7 +19,7 @@ public class MoonShotClient {
     }
 
     public static MoonShotClient create(String key) {
-        return new MoonShotClient(key, Constant.API_URL);
+        return new MoonShotClient(key, ApiUrls.CHAT_COMPLETE);
     }
 
     public ChatCompleteResult chatComplete(String systemPrompt, String userPrompt) {

@@ -2,7 +2,7 @@ package ai.timein.clients.moonshotai.entity;
 
 import java.util.List;
 
-public class ModelListDTO {
+public class ModelListResult {
     private List<ModelListItem> data;
 
     public List<ModelListItem> getData() {

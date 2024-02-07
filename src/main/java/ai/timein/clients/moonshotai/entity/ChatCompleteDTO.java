@@ -1,6 +1,5 @@
 package ai.timein.clients.moonshotai.entity;
 
-import ai.timein.clients.moonshotai.constant.Constant;
 import ai.timein.clients.moonshotai.constant.Models;
 
 import java.util.ArrayList;
@@ -51,19 +50,15 @@ public class ChatCompleteDTO {
      */
     private Boolean stream;
 
-    public static ChatCompleteDTO create(Float temperature) {
+    public static ChatCompleteDTO create(String model, Float temperature) {
         ChatCompleteDTO dto= new ChatCompleteDTO();
+        dto.setModel(model);
         dto.setTemperature(temperature);
         return dto;
     }
 
-    public static ChatCompleteDTO create() {
-        return create(Constant.TEMPERATURE);
-    }
-
     public ChatCompleteDTO() {
         messages = new ArrayList<>();
-        model=Models.moonshot_v1_8k;
         stream=false;
     }
 

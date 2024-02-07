@@ -1,33 +1,46 @@
 package ai.timein.clients.moonshotai.uitl;
 
+import ai.timein.clients.moonshotai.err.ClientException;
 import okhttp3.*;
-
-import java.io.IOException;
 
 abstract public class HttpUtil {
     private final static OkHttpClient client = new OkHttpClient();
 
-    public static String get(String url){
-        Request request = new Request.Builder()
-            .url(url)
-            .build();
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static<T> T post(String url, Object requestObj, Class<T> clazz, String... headersNamesAndValues){
+    public static<T> T request(String url, String method, Object requestObj, Class<T> clazz, String... headersNamesAndValues){
         Request request = new Request.Builder()
             .url(url)
             .headers(Headers.of(headersNamesAndValues))
-            .post(RequestBody.create(JsonUtil.toJson(requestObj), MediaType.parse("application/json")))
+            .method(method, requestObj==null?null:RequestBody.create(JsonUtil.toJson(requestObj), MediaType.parse("application/json")))
             .build();
         try (Response response = client.newCall(request).execute()) {
-            return JsonUtil.fromJson(response.body().string(),clazz);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            String str=checkResponse(response);
+            return clazz.isAssignableFrom(String.class)?(T)str:JsonUtil.fromJson(str,clazz);
+        } catch (ClientException ce){
+            throw ce;
+        } catch (Exception e) {
+            throw new ClientException("Unknown err",e);
+        }
+    }
+
+    private static String checkResponse(Response response) {
+        if (response.isSuccessful()) {
+            if(response.body()==null){
+                throw new ClientException("Response body is null");
+            }else{
+                try(ResponseBody body = response.body()){
+                    return body.string();
+                }catch (Exception e){
+                    throw new ClientException("Error reading response body",e);
+                }
+            }
+        } else if(response.code()==401) {
+            throw new ClientException("Unauthorized");
+        } else if (response.code() == 400) {
+            throw new ClientException("Bad request");
+        } else if (response.code() == 429) {
+            throw new ClientException("Too many requests");
+        } else{
+            throw new ClientException("Error response code: "+response.code());
         }
     }
 }

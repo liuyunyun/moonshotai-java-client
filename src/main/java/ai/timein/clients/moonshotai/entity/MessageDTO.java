@@ -1,17 +1,17 @@
 package ai.timein.clients.moonshotai.entity;
 
-import ai.timein.clients.moonshotai.constant.Constant;
+import ai.timein.clients.moonshotai.constant.Roles;
 
 public class MessageDTO {
     private String role;
     private String content;
 
     public static MessageDTO createSystemRole(String content) {
-        return new MessageDTO(Constant.ROLE_SYSTEM, content);
+        return new MessageDTO(Roles.SYSTEM, content);
     }
 
     public static MessageDTO createUserRole(String content) {
-        return new MessageDTO(Constant.ROLE_USER, content);
+        return new MessageDTO(Roles.USER, content);
     }
 
     public MessageDTO() {
